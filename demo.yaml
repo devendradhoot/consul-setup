@@ -1,0 +1,56 @@
+global:
+  datacenter: dc1
+  image:  "hashicorp/consul:latest"
+  #  image: "hashicorp/consul:latest"
+  imageK8S: "hashicorp/consul-k8s:latest"
+  #Added Envoy
+imageEnvoy: "envoyproxy/envoy:v1.17.0"
+
+# Expose the Consul UI through this LoadBalancer
+server:
+  enabled: true
+  replicas: 3
+  bootstrapExpect: 3
+dns:
+  enabled: true
+federation:
+    enabled: true
+
+client:
+  enabled: true
+  grpc: true
+
+ui:
+  service:
+    type: "LoadBalancer"
+  enabled: true
+# Allow Consul to inject the Connect proxy into Kubernetes containers
+connectInject:
+  enabled: true
+  #  imageEnvoy: "envoyproxy/envoy:v1.17.0"
+  default: false
+  k8sAllowNamespaces: ['*']
+  k8sDenyManespaces: []
+controller:
+    enabled: true
+acls:
+    manageSystemACLs: true
+    createReplicationToken: true    
+meshGateway:
+  enabled: true
+  # Added this below line
+  replicas: 3
+ingressGateways:
+  enabled: true
+  gateways:
+    - name: ingress-gateway
+      service:
+        type: LoadBalancer 
+terminatingGateways:
+  enabled: true 
+syncCatalog:
+  enabled: true
+  default: false
+  k8sAllowNamespaces: ['*']
+server.affinity: ""
+#Added new lines

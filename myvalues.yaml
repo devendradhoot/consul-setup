@@ -1,0 +1,15 @@
+global:
+  datacenter: dc1
+  image: "consul:latest"
+# Expose the Consul UI through this LoadBalancer
+ui:
+  service:
+    type: "LoadBalancer"
+# Allow Consul to inject the Connect proxy into Kubernetes containers
+connectInject:
+  enabled: true
+  healthChecks:
+    enabled: false
+meshGateway:
+  enabled: true
+# Affinity Settings
